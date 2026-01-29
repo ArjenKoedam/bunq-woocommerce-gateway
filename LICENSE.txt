@@ -87,7 +87,7 @@ chmod -R 755 bunq-woocommerce-gateway
 | Enable/Disable | Enable or disable the payment gateway | Enabled |
 | Title | Payment method title at checkout | "Bunq Payment" |
 | Description | Description shown to customers | "Pay securely using iDeal, Credit Card, or Bancontact via Bunq." |
-| Bunq Username | Your Bunq.me username for payment links | "mayaworldtrading" |
+| Bunq Username | Your Bunq.me username for payment links | "" |
 | Bunq URL Template | Custom URL format with %s placeholders | "https://bunq.me/%s/%s/%s/%s" |
 | Test Mode | Enable test mode for development | Disabled |
 | Debug Log | Enable debug logging | Disabled |
@@ -285,7 +285,6 @@ A: Yes, the plugin is compatible with WooCommerce's HPOS feature.
 
 ## Credits
 
-- Developed for Maya World Trading
 - Payment logos provided by Bunq
 
 ## License

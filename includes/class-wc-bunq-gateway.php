@@ -60,7 +60,7 @@ class WC_Bunq_Gateway extends WC_Payment_Gateway {
         // Define user set variables
         $this->title              = $this->get_option('title');
         $this->description        = $this->get_option('description');
-        $this->bunq_username      = $this->get_option('bunq_username', 'mayaworldtrading');
+        $this->bunq_username      = $this->get_option('bunq_username', '');
         $this->bunq_url_template  = $this->get_option('bunq_url_template', 'https://bunq.me/%s/%s/%s/%s');
         $this->enabled            = $this->get_option('enabled');
         $this->testmode           = 'yes' === $this->get_option('testmode');
@@ -114,8 +114,8 @@ class WC_Bunq_Gateway extends WC_Payment_Gateway {
             'bunq_username' => array(
                 'title'       => __('Bunq Username', 'bunq-payment-gateway'),
                 'type'        => 'text',
-                'description' => __('Your Bunq.me username (e.g., mayaworldtrading). This will be used to generate payment URLs.', 'bunq-payment-gateway'),
-                'default'     => 'mayaworldtrading',
+                'description' => __('Your Bunq.me username. This will be used to generate payment URLs.', 'bunq-payment-gateway'),
+                'default'     => '',
                 'desc_tip'    => true,
                 'placeholder' => __('Enter your Bunq username', 'bunq-payment-gateway'),
             ),
@@ -462,7 +462,7 @@ class WC_Bunq_Gateway extends WC_Payment_Gateway {
         
         if (empty($value)) {
             WC_Admin_Settings::add_error(__('Bunq Username is required. Please enter your Bunq.me username.', 'bunq-payment-gateway'));
-            return $this->get_option($key, 'mayaworldtrading');
+            return $this->get_option($key, '');
         }
         
         return $value;
