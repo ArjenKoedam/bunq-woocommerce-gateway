@@ -57,7 +57,7 @@ class WC_Bunq_Gateway extends WC_Payment_Gateway {
         $this->init_form_fields();
         $this->init_settings();
 
-        // Define user set variables
+        // Define variables to be set by user in the admin panel
         $this->title              = $this->get_option('title');
         $this->description        = $this->get_option('description');
         $this->bunq_username      = $this->get_option('bunq_username', '');
