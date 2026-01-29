@@ -1,0 +1,324 @@
+# Bunq Payment Gateway for WooCommerce
+
+A professional WordPress plugin that integrates Bunq payment processing into WooCommerce, supporting iDeal, Credit Card, and Bancontact payment methods.
+
+## Description
+
+This plugin adds Bunq as a payment gateway to your WooCommerce store, allowing customers to pay using:
+- **iDeal** - Popular Dutch payment method
+- **Credit Card** - Visa and Mastercard
+- **Bancontact** - Belgian payment method
+
+The plugin redirects customers to Bunq.me payment links where they can complete their payment securely.
+
+## Features
+
+✅ **Three Payment Methods** - iDeal, Credit Card, and Bancontact with recognizable logos  
+✅ **Fully Configurable** - Set your Bunq username and customize payment URLs via admin panel  
+✅ **Flexible URL Templates** - Customize payment link format with advanced template system  
+✅ **Fully Responsive** - Works perfectly on desktop, tablet, and mobile devices  
+✅ **Manual Order Confirmation** - Admin can manually confirm payments from the order edit page  
+✅ **Test Mode** - Enable test mode for development and testing  
+✅ **Debug Logging** - Comprehensive logging for troubleshooting  
+✅ **Auto-Complete Orders** - Optional automatic order completion  
+✅ **Clean UI** - Professional checkout experience with payment method selection  
+✅ **WooCommerce Compatible** - Follows WordPress and WooCommerce coding standards  
+✅ **Accessible** - Keyboard navigation and screen reader support  
+
+## Requirements
+
+- WordPress 5.0 or higher
+- WooCommerce 3.0 or higher
+- PHP 7.2 or higher
+- Active Bunq account
+
+## Installation
+
+### Method 1: Upload via WordPress Admin
+
+1. Download the plugin folder as a ZIP file
+2. Go to **WordPress Admin → Plugins → Add New → Upload Plugin**
+3. Choose the ZIP file and click **Install Now**
+4. Click **Activate Plugin**
+
+### Method 2: Manual Installation via FTP
+
+1. Download and extract the plugin files
+2. Upload the `bunq-woocommerce-gateway` folder to `/wp-content/plugins/`
+3. Go to **WordPress Admin → Plugins**
+4. Find **Bunq Payment Gateway for WooCommerce** and click **Activate**
+
+### Method 3: Manual Installation via Command Line
+
+```bash
+# Navigate to WordPress plugins directory
+cd /path/to/wordpress/wp-content/plugins/
+
+# Copy the plugin folder
+cp -r /path/to/bunq-woocommerce-gateway ./
+
+# Set correct permissions
+chmod -R 755 bunq-woocommerce-gateway
+```
+
+## Configuration
+
+### Basic Setup
+
+1. Go to **WooCommerce → Settings → Payments**
+2. Find **Bunq Payment Gateway** and click **Manage**
+3. Configure the following settings:
+
+   - **Enable/Disable**: Check to enable the payment gateway
+   - **Title**: Enter the title shown to customers (e.g., "Bunq Payment")
+   - **Description**: Enter the description shown at checkout
+   - **Bunq Username**: Enter your Bunq.me username (required)
+   - **Bunq URL Template**: Customize the payment URL format (optional, uses default if not changed)
+   - **Test Mode**: Enable for testing (no real payments will be processed)
+   - **Debug Log**: Enable to log all payment activities
+   - **Auto Complete Orders**: Enable to automatically mark orders as completed after payment
+
+4. Click **Save changes**
+
+### Settings Overview
+
+| Setting | Description | Default |
+|---------|-------------|---------|
+| Enable/Disable | Enable or disable the payment gateway | Enabled |
+| Title | Payment method title at checkout | "Bunq Payment" |
+| Description | Description shown to customers | "Pay securely using iDeal, Credit Card, or Bancontact via Bunq." |
+| Bunq Username | Your Bunq.me username for payment links | "mayaworldtrading" |
+| Bunq URL Template | Custom URL format with %s placeholders | "https://bunq.me/%s/%s/%s/%s" |
+| Test Mode | Enable test mode for development | Disabled |
+| Debug Log | Enable debug logging | Disabled |
+| Auto Complete Orders | Automatically mark orders as completed | Disabled |
+
+## Usage
+
+### Customer Experience
+
+1. Customer adds products to cart and proceeds to checkout
+2. At checkout, customer selects **Bunq Payment** as payment method
+3. Customer chooses one of three payment methods:
+   - iDeal
+   - Credit Card
+   - Bancontact
+4. Customer clicks **Place Order**
+5. Customer is redirected to Bunq.me payment page
+6. After completing payment, customer returns to the thank you page
+
+### Admin Experience
+
+#### Viewing Orders
+
+1. Go to **WooCommerce → Orders**
+2. Orders paid via Bunq will show "Bunq Payment Gateway" as the payment method
+3. Order status will be:
+   - **Pending Payment** - Awaiting payment confirmation
+   - **Processing** - Payment confirmed (if auto-complete is disabled)
+   - **Completed** - Order fulfilled (if auto-complete is enabled)
+
+#### Manual Payment Confirmation
+
+1. Open any order paid with Bunq
+2. In the right sidebar, find the **Bunq Payment Confirmation** meta box
+3. View the payment method used and order status
+4. If payment is pending, click **Confirm Payment** to manually approve
+5. Order status will update to Processing or Completed
+
+#### Viewing Debug Logs
+
+1. Go to **WooCommerce → Status → Logs**
+2. Select the `bunq-gateway-` log file
+3. View all payment activities, URLs generated, and errors
+
+## Payment URL Configuration
+
+The plugin generates Bunq payment URLs using a configurable template system. All settings can be customized through the WordPress admin panel - no code changes required!
+
+### Default URL Format
+
+```
+https://bunq.me/{username}/{amount}/{order_number}/{payment_method}
+```
+
+**Example URLs with username "yourshop":**
+- iDeal: `https://bunq.me/yourshop/49.99/12345/ideal`
+- Credit Card: `https://bunq.me/yourshop/99.50/12346/card`
+- Bancontact: `https://bunq.me/yourshop/29.99/12347/bancontact`
+
+### Customizing Your Bunq Username
+
+1. Go to **WooCommerce → Settings → Payments → Bunq Payment Gateway**
+2. Find the **"Bunq Username"** field
+3. Enter your Bunq.me username
+4. Click **Save changes**
+
+The username will be used in all payment URLs going forward.
+
+### Advanced: Custom URL Templates
+
+You can customize the entire URL format if needed:
+
+1. Go to **WooCommerce → Settings → Payments → Bunq Payment Gateway**
+2. Find the **"Bunq URL Template"** field
+3. Enter your custom URL using `%s` placeholders for:
+   - **1st %s** = Your Bunq username
+   - **2nd %s** = Order amount
+   - **3rd %s** = Order number
+   - **4th %s** = Payment method (ideal, card, or bancontact)
+4. Click **Save changes**
+
+**Example Custom Templates:**
+```
+Default:        https://bunq.me/%s/%s/%s/%s
+Alternative:    https://pay.bunq.me/%s/payment/%s/%s/%s
+Custom domain:  https://payment.yourdomain.com/%s/%s/%s/%s
+```
+
+**Note:** The template must contain exactly 4 `%s` placeholders in the correct order. Invalid templates will show an error and revert to the previous value.
+
+## Customization
+
+### Styling
+
+The plugin includes responsive CSS that works on all devices. To customize:
+
+**Checkout Page Styles:**
+Edit `/assets/css/checkout.css` to modify the payment method selection appearance.
+
+**Admin Page Styles:**
+Edit `/assets/css/admin.css` to customize the admin order page appearance.
+
+### Adding More Payment Methods
+
+To add additional payment methods:
+
+1. Open `/includes/class-wc-bunq-gateway.php`
+2. Find the `$payment_methods` array (around line 29)
+3. Add your new method:
+   ```php
+   'method_key' => 'Method Name',
+   ```
+4. Add the corresponding logo to `/assets/images/`
+5. Update the `payment_fields()` method to include the new logo
+
+## Troubleshooting
+
+### Plugin Not Showing at Checkout
+
+- Ensure WooCommerce is installed and activated
+- Check that the plugin is activated in **Plugins** page
+- Verify that the gateway is enabled in **WooCommerce → Settings → Payments**
+
+### Payment Not Processing
+
+- Check if test mode is enabled (no real payments will be processed in test mode)
+- Verify the Bunq username is configured correctly in the settings
+- Check that the Bunq URL Template has exactly 4 %s placeholders
+- Enable debug logging and check logs for errors
+- Review the generated payment URL in the debug logs
+
+### Styles Not Loading
+
+- Clear browser cache
+- Clear WordPress cache (if using a caching plugin)
+- Check that asset files exist in `/assets/` directory
+
+### Logo Images Not Displaying
+
+- Verify images exist in `/assets/images/` directory
+- Check file permissions (should be 644)
+- Clear browser cache
+
+## Support
+
+For issues, questions, or feature requests:
+
+1. Enable debug logging in plugin settings
+2. Check WooCommerce logs for error messages
+3. Verify all requirements are met
+4. Check that WooCommerce and WordPress are up to date
+
+## Frequently Asked Questions
+
+**Q: Does this plugin process payments directly?**  
+A: No, the plugin redirects customers to Bunq.me where Bunq processes the payment securely.
+
+**Q: Can I use this plugin with any Bunq account?**  
+A: Yes! Simply enter your Bunq.me username in the plugin settings (WooCommerce → Settings → Payments → Bunq Payment Gateway). No code changes required.
+
+**Q: How do I change my Bunq username?**  
+A: Go to WooCommerce → Settings → Payments → Bunq Payment Gateway, update the "Bunq Username" field, and save your changes.
+
+**Q: Can I customize the payment URL format?**  
+A: Yes! The plugin includes a "Bunq URL Template" setting where you can customize the entire URL structure using %s placeholders.
+
+**Q: Are there any transaction fees?**  
+A: This plugin doesn't charge fees, but Bunq may have their own transaction fees. Check with Bunq for details.
+
+**Q: Can I test payments without processing real transactions?**  
+A: Yes, enable Test Mode in the plugin settings. Note that this prevents payment URLs from being generated with real payment data.
+
+**Q: How do I know if a payment was successful?**  
+A: Customers will return to the thank you page after payment. You can manually confirm payments in the order admin page.
+
+**Q: Is this plugin compatible with HPOS (High-Performance Order Storage)?**  
+A: Yes, the plugin is compatible with WooCommerce's HPOS feature.
+
+## Changelog
+
+### Version 1.1.0 - Configuration Improvements
+- **NEW:** Configurable Bunq username via admin settings (no code changes required)
+- **NEW:** Customizable payment URL template with validation
+- **IMPROVED:** More flexible configuration for different merchants and use cases
+- **UPDATED:** Comprehensive documentation with examples
+
+### Version 1.0.0 - Initial Release
+- Three payment methods: iDeal, Credit Card, Bancontact
+- Responsive design for all devices
+- Manual payment confirmation in admin
+- Test mode support
+- Debug logging
+- Auto-complete orders option
+- Full WooCommerce integration
+
+## Credits
+
+- Developed for Maya World Trading
+- Payment logos provided by Bunq
+
+## License
+
+This plugin is provided as-is for use with WooCommerce and Bunq payment processing.
+
+## Security
+
+- All payment processing is handled by Bunq's secure platform
+- No sensitive payment data is stored on your server
+- Customer data is transmitted securely via HTTPS
+- Admin actions are protected with WordPress nonces
+
+## Performance
+
+- Lightweight plugin with minimal impact on page load times
+- Assets only loaded on checkout and admin order pages
+- Optimized CSS and JavaScript
+- No external API calls during checkout (redirect-based)
+
+## Development
+
+### Coding Standards
+
+This plugin follows:
+- WordPress Coding Standards
+- WooCommerce Coding Standards
+- PHP PSR-12 recommendations
+
+### Hooks and Filters
+
+The plugin uses standard WooCommerce hooks and provides several action points for customization.
+
+---
+
+**Need Help?** Make sure to enable debug logging to troubleshoot any issues!

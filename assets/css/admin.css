@@ -1,0 +1,67 @@
+
+/**
+ * Bunq Payment Gateway - Admin Styles
+ */
+
+/* Meta box styling */
+.bunq-meta-box {
+    padding: 10px 0;
+}
+
+.bunq-meta-box p {
+    margin: 8px 0;
+}
+
+.bunq-meta-box strong {
+    display: inline-block;
+    min-width: 120px;
+}
+
+.bunq-confirm-description {
+    color: #666;
+    font-style: italic;
+    margin: 15px 0 10px 0 !important;
+}
+
+.bunq-confirm-payment {
+    width: 100%;
+    text-align: center;
+    margin: 10px 0;
+}
+
+.bunq-confirm-loader {
+    display: block;
+    text-align: center;
+    color: #007cba;
+    margin: 10px 0;
+}
+
+.bunq-order-complete {
+    color: #46b450;
+    font-weight: 600;
+}
+
+/* Settings page */
+.bunq-settings-header {
+    background: #fff;
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 4px;
+}
+
+.bunq-settings-header h2 {
+    margin-top: 0;
+}
+
+/* Responsive admin */
+@media screen and (max-width: 782px) {
+    .bunq-meta-box {
+        padding: 5px 0;
+    }
+
+    .bunq-confirm-payment {
+        font-size: 14px;
+        padding: 8px 12px;
+    }
+}
