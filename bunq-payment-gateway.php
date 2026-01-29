@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name: Bunq Payment Gateway for WooCommerce
- * Plugin URI: https://payment-links.mollie.com/payment/VYLkB8UFM9vKkV77sNVwJ
+ * Plugin URI: https://github.com/ArjenKoedam/bunq-woocommerce-gateway
  * Description: Accept payments via Bunq with iDeal, Credit Card, and Bancontact payment methods
  * Version: 7.7.7
- * Author: Tomas
- * Author URI: https://payment-links.mollie.com/payment/VYLkB8UFM9vKkV77sNVwJ
+ * Author: CYTUNO
+ * Author URI: https://cytuno.com
  * Text Domain: bunq-payment-gateway
  * Domain Path: /languages
  * Requires at least: 5.0
@@ -19,7 +19,7 @@
 defined('ABSPATH') || exit;
 
 // Define plugin constants
-define('BUNQ_PAYMENT_GATEWAY_VERSION', '1.0.0');
+define('BUNQ_PAYMENT_GATEWAY_VERSION', '1.1.0');
 define('BUNQ_PAYMENT_GATEWAY_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('BUNQ_PAYMENT_GATEWAY_PLUGIN_URL', plugin_dir_url(__FILE__));
 
