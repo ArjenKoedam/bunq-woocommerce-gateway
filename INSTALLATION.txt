@@ -13,7 +13,8 @@ INSTALLATION METHODS
 
 METHOD 1: WordPress Admin Upload
 ---------------------------------
-1. Download bunq-woocommerce-gateway.zip
+1. Download bunq-woocommerce-gateway.zip from:
+   https://github.com/ArjenKoedam/bunq-woocommerce-gateway/archive/refs/heads/main.zip
 2. Go to WordPress Admin → Plugins → Add New
 3. Click "Upload Plugin"
 4. Choose the ZIP file
@@ -22,7 +23,8 @@ METHOD 1: WordPress Admin Upload
 
 METHOD 2: FTP/Manual Installation
 ----------------------------------
-1. Extract the ZIP file
+1. Download and extract the ZIP file from:
+   https://github.com/ArjenKoedam/bunq-woocommerce-gateway/archive/refs/heads/main.zip
 2. Upload the 'bunq-woocommerce-gateway' folder to /wp-content/plugins/
 3. Go to WordPress Admin → Plugins
 4. Find "Bunq Payment Gateway for WooCommerce"

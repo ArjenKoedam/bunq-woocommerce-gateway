@@ -36,14 +36,14 @@ The plugin redirects customers to Bunq.me payment links where they can complete 
 
 ### Method 1: Upload via WordPress Admin
 
-1. Download the plugin folder as a ZIP file
+1. Download the plugin folder as a ZIP file from [here](https://github.com/ArjenKoedam/bunq-woocommerce-gateway/archive/refs/heads/main.zip)
 2. Go to **WordPress Admin → Plugins → Add New → Upload Plugin**
 3. Choose the ZIP file and click **Install Now**
 4. Click **Activate Plugin**
 
 ### Method 2: Manual Installation via FTP
 
-1. Download and extract the plugin files
+1. Download and extract the plugin files from [here](https://github.com/ArjenKoedam/bunq-woocommerce-gateway/archive/refs/heads/main.zip)
 2. Upload the `bunq-woocommerce-gateway` folder to `/wp-content/plugins/`
 3. Go to **WordPress Admin → Plugins**
 4. Find **Bunq Payment Gateway for WooCommerce** and click **Activate**
