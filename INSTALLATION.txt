@@ -46,6 +46,7 @@ CONFIGURATION
    - Title: "Bunq Payment" (or your preferred title)
    - Description: Add customer-facing description
    - Bunq Username: Enter your Bunq.me username (REQUIRED)
+   - Bunq Description: Template for payment description (default: Order nr. {order_number})
    - Bunq URL Template: Customize payment URL format (optional)
    - Test Mode: Enable for testing
    - Debug Log: Enable for troubleshooting
@@ -64,10 +65,17 @@ Bunq Username:
 Custom Payment URL Format (Advanced):
 - Go to WooCommerce → Settings → Payments → Bunq Payment Gateway
 - Update the "Bunq URL Template" field
-- Use %s placeholders for: username, amount, order number, payment method
+- Use %s placeholders for: username, amount, description, payment method
 - Template must contain exactly 4 %s placeholders
 - Example: https://bunq.me/%s/%s/%s/%s
 - Save changes
+
+Bunq Description Template:
+- Go to WooCommerce → Settings → Payments → Bunq Payment Gateway
+- Update the "Bunq Description" field
+- Default value: Order nr. {order_number}
+- Supported placeholder: {order_number}
+- The generated description is URL-encoded automatically in the payment URL
 
 TESTING
 -------

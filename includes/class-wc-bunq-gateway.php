@@ -33,6 +33,13 @@ class WC_Bunq_Gateway extends WC_Payment_Gateway {
     private $bunq_url_template;
 
     /**
+     * Bunq payment description template
+     *
+     * @var string
+     */
+    private $bunq_description_template;
+
+    /**
      * Available payment methods
      *
      * @var array
@@ -61,6 +68,7 @@ class WC_Bunq_Gateway extends WC_Payment_Gateway {
         $this->title              = $this->get_option('title');
         $this->description        = $this->get_option('description');
         $this->bunq_username      = $this->get_option('bunq_username', '');
+        $this->bunq_description_template = $this->get_option('bunq_description_template', 'Order nr. {order_number}');
         $this->bunq_url_template  = $this->get_option('bunq_url_template', 'https://bunq.me/%s/%s/%s/%s');
         $this->enabled            = $this->get_option('enabled');
         $this->testmode           = 'yes' === $this->get_option('testmode');
@@ -119,10 +127,18 @@ class WC_Bunq_Gateway extends WC_Payment_Gateway {
                 'desc_tip'    => true,
                 'placeholder' => __('Enter your Bunq username', 'bunq-payment-gateway'),
             ),
+            'bunq_description_template' => array(
+                'title'       => __('Bunq Description', 'bunq-payment-gateway'),
+                'type'        => 'text',
+                'description' => __('Template used for the Bunq payment description. Use {order_number} to insert the WooCommerce order number.', 'bunq-payment-gateway'),
+                'default'     => 'Order nr. {order_number}',
+                'desc_tip'    => true,
+                'placeholder' => 'Order nr. {order_number}',
+            ),
             'bunq_url_template' => array(
                 'title'       => __('Bunq URL Template', 'bunq-payment-gateway'),
                 'type'        => 'text',
-                'description' => __('The URL template for Bunq payment links. Use %s placeholders for: username, amount, order number, and payment method (in that order).', 'bunq-payment-gateway'),
+                'description' => __('The URL template for Bunq payment links. Use %s placeholders for: username, amount, description, and payment method (in that order).', 'bunq-payment-gateway'),
                 'default'     => 'https://bunq.me/%s/%s/%s/%s',
                 'desc_tip'    => true,
                 'placeholder' => 'https://bunq.me/%s/%s/%s/%s',
@@ -277,6 +293,8 @@ class WC_Bunq_Gateway extends WC_Payment_Gateway {
     private function generate_bunq_payment_url($order, $payment_method) {
         $amount = number_format($order->get_total(), 2, '.', '');
         $order_number = $order->get_order_number();
+        $description = str_replace('{order_number}', $order_number, $this->bunq_description_template);
+        $encoded_description = rawurlencode($description);
         
         // Store return URL in order meta for later use
         $return_url = $this->get_return_url($order);
@@ -284,12 +302,12 @@ class WC_Bunq_Gateway extends WC_Payment_Gateway {
         $order->save();
 
         // Generate Bunq.me URL using the configured template
-        // Format: {template} with placeholders for username, amount, order number, and payment method
+        // Format: {template} with placeholders for username, amount, description, and payment method
         $bunq_url = sprintf(
             $this->bunq_url_template,
             $this->bunq_username,
             $amount,
-            $order_number,
+            $encoded_description,
             $payment_method
         );
 

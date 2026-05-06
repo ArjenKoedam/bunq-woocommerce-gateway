@@ -14,7 +14,7 @@ The plugin redirects customers to Bunq.me payment links where they can complete 
 ## Features
 
 ✅ **Three Payment Methods** - iDeal, Credit Card, and Bancontact with recognizable logos  
-✅ **Fully Configurable** - Set your Bunq username and customize payment URLs via admin panel  
+✅ **Fully Configurable** - Set your Bunq username, description template, and customize payment URLs via admin panel  
 ✅ **Flexible URL Templates** - Customize payment link format with advanced template system  
 ✅ **Fully Responsive** - Works perfectly on desktop, tablet, and mobile devices  
 ✅ **Manual Order Confirmation** - Admin can manually confirm payments from the order edit page  
@@ -73,6 +73,7 @@ chmod -R 755 bunq-woocommerce-gateway
    - **Title**: Enter the title shown to customers (e.g., "Bunq Payment")
    - **Description**: Enter the description shown at checkout
    - **Bunq Username**: Enter your Bunq.me username (required)
+   - **Bunq Description**: Template for payment description (default: `Order nr. {order_number}`)
    - **Bunq URL Template**: Customize the payment URL format (optional, uses default if not changed)
    - **Test Mode**: Enable for testing (no real payments will be processed)
    - **Debug Log**: Enable to log all payment activities
@@ -88,6 +89,7 @@ chmod -R 755 bunq-woocommerce-gateway
 | Title | Payment method title at checkout | "Bunq Payment" |
 | Description | Description shown to customers | "Pay securely using iDeal, Credit Card, or Bancontact via Bunq." |
 | Bunq Username | Your Bunq.me username for payment links | "" |
+| Bunq Description | Template used as Bunq payment description | "Order nr. {order_number}" |
 | Bunq URL Template | Custom URL format with %s placeholders | "https://bunq.me/%s/%s/%s/%s" |
 | Test Mode | Enable test mode for development | Disabled |
 | Debug Log | Enable debug logging | Disabled |
@@ -139,13 +141,21 @@ The plugin generates Bunq payment URLs using a configurable template system. All
 ### Default URL Format
 
 ```
-https://bunq.me/{username}/{amount}/{order_number}/{payment_method}
+https://bunq.me/{username}/{amount}/{description}/{payment_method}
 ```
 
-**Example URLs with username "yourshop":**
-- iDeal: `https://bunq.me/yourshop/49.99/12345/ideal`
-- Credit Card: `https://bunq.me/yourshop/99.50/12346/card`
-- Bancontact: `https://bunq.me/yourshop/29.99/12347/bancontact`
+**Example URLs with username "yourshop" and default Bunq Description template (`Order nr. {order_number}`):**
+- iDeal: `https://bunq.me/yourshop/49.99/Order%20nr.%2012345/ideal`
+- Credit Card: `https://bunq.me/yourshop/99.50/Order%20nr.%2012346/card`
+- Bancontact: `https://bunq.me/yourshop/29.99/Order%20nr.%2012347/bancontact`
+
+### Bunq Description Template
+
+The **Bunq Description** setting controls what is sent as the payment description in the generated URL.
+
+- Default value: `Order nr. {order_number}`
+- Supported placeholder: `{order_number}`
+- The resulting description is URL-encoded automatically when building the payment link
 
 ### Customizing Your Bunq Username
 
@@ -165,7 +175,7 @@ You can customize the entire URL format if needed:
 3. Enter your custom URL using `%s` placeholders for:
    - **1st %s** = Your Bunq username
    - **2nd %s** = Order amount
-   - **3rd %s** = Order number
+   - **3rd %s** = Bunq description (from "Bunq Description" template, with placeholders replaced)
    - **4th %s** = Payment method (ideal, card, or bancontact)
 4. Click **Save changes**
 
@@ -290,6 +300,7 @@ A: Yes, the plugin is compatible with WooCommerce's HPOS feature.
 
 ### Version 1.1.0 - Configuration Improvements
 - **NEW:** Configurable Bunq username via admin settings (no code changes required)
+- **NEW:** Configurable Bunq Description template with `{order_number}` placeholder support
 - **NEW:** Customizable payment URL template with validation
 - **IMPROVED:** More flexible configuration for different merchants and use cases
 - **UPDATED:** Comprehensive documentation with examples
