@@ -145,9 +145,9 @@ https://bunq.me/{username}/{amount}/{description}/{payment_method}
 ```
 
 **Example URLs with username "yourshop" and default Bunq Description template (`Order nr. {order_number}`):**
-- iDeal: `https://bunq.me/yourshop/49.99/Order%20nr.%2012345/ideal`
-- Credit Card: `https://bunq.me/yourshop/99.50/Order%20nr.%2012346/card`
-- Bancontact: `https://bunq.me/yourshop/29.99/Order%20nr.%2012347/bancontact`
+- iDeal: `https://bunq.me/yourshop/49.99/Order%20nr.%2012345/IDEAL`
+- Credit Card: `https://bunq.me/yourshop/99.50/Order%20nr.%2012346/CARD`
+- Bancontact: `https://bunq.me/yourshop/29.99/Order%20nr.%2012347/BANCONTACT`
 
 ### Bunq Description Template
 
@@ -176,7 +176,7 @@ You can customize the entire URL format if needed:
    - **1st %s** = Your Bunq username
    - **2nd %s** = Order amount
    - **3rd %s** = Bunq description (from "Bunq Description" template, with placeholders replaced)
-   - **4th %s** = Payment method (ideal, card, or bancontact)
+   - **4th %s** = Payment method (IDEAL, CARD, or BANCONTACT)
 4. Click **Save changes**
 
 **Example Custom Templates:**

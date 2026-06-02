@@ -77,7 +77,6 @@ class WC_Bunq_Gateway extends WC_Payment_Gateway {
         // Actions
         add_action('woocommerce_update_options_payment_gateways_' . $this->id, array($this, 'process_admin_options'));
         add_action('woocommerce_api_wc_bunq_gateway', array($this, 'check_bunq_response'));
-        add_action('woocommerce_receipt_' . $this->id, array($this, 'receipt_page'));
 
         // Add meta box for manual order confirmation
         add_action('add_meta_boxes', array($this, 'add_order_meta_box'));
@@ -247,40 +246,13 @@ class WC_Bunq_Gateway extends WC_Payment_Gateway {
         // Log the transaction
         call_user_func($this->log_debug, 'Processing payment for order #' . $order_id . ' with method: ' . $payment_method);
 
-        // Return redirect to receipt page
-        return array(
-            'result'   => 'success',
-            'redirect' => $order->get_checkout_payment_url(true)
-        );
-    }
-
-    /**
-     * Receipt page
-     *
-     * @param int $order_id
-     */
-    public function receipt_page($order_id) {
-        $order = wc_get_order($order_id);
-        
-        if (!$order) {
-            return;
-        }
-
-        // Get the payment method
-        $payment_method = $order->get_meta('_bunq_payment_method');
-        
-        // Generate Bunq payment URL
+        // Generate external payment URL and redirect directly from checkout
         $payment_url = $this->generate_bunq_payment_url($order, $payment_method);
 
-        echo '<p>' . __('Thank you for your order. You will be redirected to Bunq to complete your payment.', 'bunq-payment-gateway') . '</p>';
-        echo '<p><a class="button alt" href="' . esc_url($payment_url) . '">' . __('Pay Now', 'bunq-payment-gateway') . '</a></p>';
-        
-        // Auto redirect
-        echo '<script type="text/javascript">
-            setTimeout(function() {
-                window.location.href = "' . esc_js($payment_url) . '";
-            }, 2000);
-        </script>';
+        return array(
+            'result'   => 'success',
+            'redirect' => $payment_url
+        );
     }
 
     /**
@@ -295,6 +267,8 @@ class WC_Bunq_Gateway extends WC_Payment_Gateway {
         $order_number = $order->get_order_number();
         $description = str_replace('{order_number}', $order_number, $this->bunq_description_template);
         $encoded_description = rawurlencode($description);
+        $bunq_payment_method = strtoupper($payment_method);
+        $url_template = html_entity_decode($this->bunq_url_template, ENT_QUOTES, 'UTF-8');
         
         // Store return URL in order meta for later use
         $return_url = $this->get_return_url($order);
@@ -304,11 +278,11 @@ class WC_Bunq_Gateway extends WC_Payment_Gateway {
         // Generate Bunq.me URL using the configured template
         // Format: {template} with placeholders for username, amount, description, and payment method
         $bunq_url = sprintf(
-            $this->bunq_url_template,
+            $url_template,
             $this->bunq_username,
             $amount,
             $encoded_description,
-            $payment_method
+            $bunq_payment_method
         );
 
         call_user_func($this->log_debug, 'Generated Bunq payment URL: ' . $bunq_url . ' for order #' . $order_number);
@@ -495,6 +469,7 @@ class WC_Bunq_Gateway extends WC_Payment_Gateway {
      */
     public function validate_bunq_url_template_field($key, $value) {
         $value = sanitize_text_field($value);
+        $value = html_entity_decode($value, ENT_QUOTES, 'UTF-8');
         
         if (empty($value)) {
             WC_Admin_Settings::add_error(__('Bunq URL Template is required.', 'bunq-payment-gateway'));
